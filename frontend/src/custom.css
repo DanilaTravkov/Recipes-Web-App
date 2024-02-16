@@ -1,0 +1,29 @@
+.skeleton {
+	background: linear-gradient(90deg, #cacaca 25%, #aaaaaa 50%, #cacaca 75%);
+	background-size: 200% 100%;
+	animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+/* custom-styles.css */
+
+.custom-element {
+  transition: width 300ms ease-in-out;
+}
+
+.custom-element:hover {
+  width: calc(15/16 * 100%);
+	
+}
+
+.custom-container:hover .custom-element:not(:hover) {
+  width: calc(1/8 * 100%);
+}

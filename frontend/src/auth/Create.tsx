@@ -1,7 +1,6 @@
-import  {createUserFormSchema} from './schema'
+import { createUserFormSchema } from './schema'
 import { useContext } from 'react'
 import { AuthContext } from '@/context/AuthProvider'
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -10,7 +9,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,21 +26,24 @@ export function Create() {
     resolver: zodResolver(createUserFormSchema),
     defaultValues: {
       username: "",
+      email: "",
+      password: ""
     },
   })
  
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof createUserFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+
     console.log(context.message)
   }
 
 	return (
     <Form {...form}>
-      <div className='w-1/3'>
+      <div className='flex relative bg-white/10 rounded-3xl w-3/4 h-full flex-col items-center justify-center'>
+        <p className='mb-5 text-2xl font-bold'>Create account</p>
+        <Link className="absolute bottom-0 left-0 p-5 text-sm" to='/'>Return to the main page</Link>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-2 w-full mt-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 flex flex-col gap-2 w-1/2">
           <FormField
                 control={form.control}
                 name="username"
@@ -50,7 +51,7 @@ export function Create() {
                   <FormItem>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input type="text" className="shad-input" {...field} />
+                      <Input placeholder="Your username" type="text" className="text-black" {...field} />
                     </FormControl>
                     {/* <FormDescription>
                       This is your public display name.
@@ -66,7 +67,7 @@ export function Create() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="text" className="shad-input" {...field} />
+                      <Input placeholder="Your email" type="text" className="text-black" {...field} />
                     </FormControl>
                     {/* <FormDescription>
                       This is your public display name.
@@ -82,7 +83,7 @@ export function Create() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="text" className="shad-input" {...field} />
+                      <Input placeholder="Your password" type="password" className="text-black" {...field} />
                     </FormControl>
                     {/* <FormDescription>
                       This is your public display name.
@@ -91,13 +92,13 @@ export function Create() {
                   </FormItem>
                 )}
           />
-          <Button type="submit">
+          <Button className='bg-indigo-800 p-2' type="submit">
             Sign up
           </Button>
             
           <p className="text-small-regular text-light-2 text-center mt-2">
             Already have an account? 
-            <Link to='/sign-in' className="text-primary-500 font-bold ml-1">Log in</Link>
+            <Link to='/login' className="text-white font-bold ml-1">Log in</Link>
           </p>
         </form>
       </div>

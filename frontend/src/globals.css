@@ -10,6 +10,6 @@
   }
 
   body {
-    @apply bg-rose-900 text-white min-h-screen font-inter;
+    @apply bg-dark-3 text-white min-h-screen font-inter;
   }
 }
