@@ -1,20 +1,7 @@
 import '../custom.css'
 import '../override.css'
 
-import * as React from "react"
-import {Link} from "react-router-dom"
- 
-import { cn } from "@/lib/utils"
-
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+import React, { useState } from 'react'
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -54,27 +41,49 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ]
 
-export function NavigationMenuDemo() {
-  return <div></div>
+export function MyNavigationMenu() {
+  return <>
+		<ul className='flex justify-center space-x-8'>
+			<li>About</li>
+			<li>Daily</li>
+			<li>Categories</li>
+			<li>Policy</li>
+		</ul>
+	</>
 }
 
 export const Header = () => {
+
+	const [searchInput, setSearchInput] = useState<string>("")
+	const [openSearch, setOpenSearch] = useState<boolean>(false)
+
+	const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchInput(event.target.value)
+	}
+
+	const handleFocus = () => {
+		openSearch ? setOpenSearch(false) :  setOpenSearch(true)
+		console.log(openSearch)
+	}
+
+
+
 	return (
 		<header className="h-1/6 flex items-center">
 			<div className="flex justify-center w-1/4 font-extrabold text-3xl">Logo</div>
 
-			<div className="flex justify-center w-1/2 space-x-8">
-				<NavigationMenuDemo />
+			<div className="w-1/3">
+				<MyNavigationMenu />
 			</div>
 
 			<div className="flex justify-center w-1/2 space-x-2">
 
-				<div className="flex relative rounded-full h-8 w-8 hover:w-1/2 transition-all ease-in-out">
-					<input type="text" className="relative bg-red rounded-full w-full transition-all ease-in-out p-2" />
+				<div className={`flex relative rounded-full h-8 ${openSearch ? "w-1/3" : "w-8"} hover:w-1/3 transition-all ease-in-out`}>
+					<input value={searchInput} onChange={handleSearch} onBlur={handleFocus} onFocus={handleFocus} type="text" className="relative bg-red rounded-full w-full transition-all ease-in-out p-2" />
 					<img src="src/assets/svg/search.svg" alt="search" className="absolute top-0 right-0 w-8 h-8 p-1" />
 				</div>
 
-				<div className="w-1/2 flex justify-start">
+				<div className="flex justify-start">
 					<div className="border-2 border-white rounded-full h-8 w-8 p-0.5">
 						<img src="src/assets/svg/user.png" alt="user" />
 					</div>
