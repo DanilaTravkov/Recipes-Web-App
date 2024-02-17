@@ -17,13 +17,15 @@
 
 .custom-element {
   transition: width 300ms ease-in-out;
+	filter: none
 }
 
 .custom-element:hover {
   width: calc(15/16 * 100%);
-	
+	filter: none
 }
 
-.custom-container:hover .custom-element:not(:hover) {
+.custom-element:hover .custom-element:not(:hover) {
   width: calc(1/8 * 100%);
+	filter: blur(2px)
 }

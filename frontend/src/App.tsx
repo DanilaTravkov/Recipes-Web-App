@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Router> 
-        <main className="flex h-screen">
+        <main className="flex min-h-screen">
           <Routes>
             {/* pulic routes */}
             <Route element={<AuthLayout />}>
