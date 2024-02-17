@@ -126,9 +126,8 @@ export const Home = () => {
 										<AvatarFallback>CN</AvatarFallback>
 									</Avatar>
 									</TableCell>
-									<TableCell>*Rating*</TableCell>
+									<TableCell>4.82</TableCell>
 									<TableCell>*Top recipe*</TableCell>
-									<TableCell className="text-right"></TableCell>
 								</TableRow>
 								<TableRow className="hover:bg-black/20 text-black">
 									<TableCell className="font-medium">Michael</TableCell>
@@ -138,7 +137,7 @@ export const Home = () => {
 										<AvatarFallback>CN</AvatarFallback>
 									</Avatar>
 									</TableCell>
-									<TableCell>*Rating*</TableCell>
+									<TableCell>4.09</TableCell>
 									<TableCell>*Top recipe*</TableCell>
 								</TableRow>
 								<TableRow className="hover:bg-black/20 text-black">
@@ -149,7 +148,7 @@ export const Home = () => {
 										<AvatarFallback>CN</AvatarFallback>
 									</Avatar>
 									</TableCell>
-									<TableCell>*Rating*</TableCell>
+									<TableCell>2.06</TableCell>
 									<TableCell>*Top recipe*</TableCell>
 								</TableRow>
 								<TableRow className="hover:bg-black/20 text-black">
@@ -160,7 +159,7 @@ export const Home = () => {
 										<AvatarFallback>CN</AvatarFallback>
 									</Avatar>
 									</TableCell>
-									<TableCell>*Rating*</TableCell>
+									<TableCell>1.88</TableCell>
 									<TableCell>*Top recipe*</TableCell>
 								</TableRow>
 								<TableRow className="hover:bg-black/20 text-black">
@@ -171,7 +170,7 @@ export const Home = () => {
 										<AvatarFallback>CN</AvatarFallback>
 									</Avatar>
 									</TableCell>
-									<TableCell>*Rating*</TableCell>
+									<TableCell>1.71</TableCell>
 									<TableCell>*Top recipe*</TableCell>
 								</TableRow>
 							</TableBody>

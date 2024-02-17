@@ -44,10 +44,10 @@ const components: { title: string; href: string; description: string }[] = [
 export function MyNavigationMenu() {
   return <>
 		<ul className='flex justify-center space-x-8'>
-			<li>About</li>
-			<li>Daily</li>
-			<li>Categories</li>
-			<li>Policy</li>
+			<li className='hover:text-white/70 transition-colors ease-in-out cursor-default'>About</li>
+			<li className='hover:text-white/70 transition-colors ease-in-out cursor-default'>Daily</li>
+			<li className='hover:text-white/70 transition-colors ease-in-out cursor-default'>Categories</li>
+			<li className='hover:text-white/70 transition-colors ease-in-out cursor-default'>Policy</li>
 		</ul>
 	</>
 }
@@ -63,6 +63,7 @@ export const Header = () => {
 
 	const handleFocus = () => {
 		openSearch ? setOpenSearch(false) :  setOpenSearch(true)
+		setSearchInput("")
 		console.log(openSearch)
 	}
 
