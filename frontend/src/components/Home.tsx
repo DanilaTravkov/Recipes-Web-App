@@ -83,9 +83,11 @@ export const Home = () => {
 							<p className="text-4xl font-bold">Find the perfect recipe</p> 
 							<p className="text-4xl font-normal mb-10">Create and start sharing</p>
 							<p className="mb-10 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim reprehenderit recusandae accusamus libero repellat architecto aspernatur possimus quae tempore at fugiat non nam illum quod deserunt magnam, quas laborum incidunt?</p>
-							<Button className='bg-red hover:bg-red/70 p-2 w-1/2' type="submit">
-								Explore &#x2197;
-							</Button>
+							<a href="#second">
+								<Button className='bg-red hover:bg-red/70 p-2 w-1/2' type="button">
+									Explore &#x2197;
+								</Button>
+							</a>
 						</div>
 					</section>
 
@@ -104,7 +106,7 @@ export const Home = () => {
 				</div>
 			</div>
 
-			<div className="flex w-full h-screen bg-white/80">
+			<div id="second" className="flex w-full h-screen bg-white/80">
 				<div className="relative w-1/2 h-full">
 					<div className="absolute h-1/2 w-1/2 right-0 m-10 bg-black/80 rounded-xl"></div>
 					<div className="absolute h-1/2 w-1/2 bottom-0 left-1/4 mb-24 bg-black/40 rounded-xl"></div>
@@ -116,7 +118,6 @@ export const Home = () => {
 						<p className="text-4xl font-normal mb-10 text-dark-3">From our monthly top</p>
 						<Table>
 							{/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-
 							<TableBody>
 								<TableRow className="hover:bg-black/20 text-black">
 									<TableCell className="font-medium">Sofi</TableCell>

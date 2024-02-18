@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../custom.css'
 
 export const NavWindow = ({text}: {text: string}) => {
-	return <div className="absolute bg-white/10 p-5 mt-2">{text}</div>
+	return <div className="absolute bg-white/10 p-5 mt-2 rounded">{text}</div>
 }
 
 export const NavItem = ({ title, children }: { title: string; children: React.ReactNode }) => {
@@ -18,12 +18,12 @@ export const NavItem = ({ title, children }: { title: string; children: React.Re
 
   return (
     <>
-      <li
-        onMouseOver={handleHover}
-        onMouseOut={handleMouseOut}
-        className='transition-colors ease-in-out cursor-default'
-      >
-        <div className='flex items-center justify-center'>
+      <li className='transition-colors ease-in-out cursor-default'>
+        <div 
+					className='flex items-center justify-center'
+					onMouseOver={handleHover}
+        	onMouseOut={handleMouseOut}
+				>
           <p className="hover:text-white/70">{title}</p>
           <img className={`ml-2 w-3 h-3 transform ${hovered ? 'rotate-180' : 'rotate-0'} transition-transform ease-in-out duration-300`} src="src/assets/other/arrow-down.png" alt="arrow" />
         </div>
