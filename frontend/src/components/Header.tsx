@@ -2,6 +2,7 @@ import '../custom.css'
 import '../override.css'
 
 import React, { useState } from 'react'
+import { NavItem, NavWindow } from './NavItem'
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -44,10 +45,18 @@ const components: { title: string; href: string; description: string }[] = [
 export function MyNavigationMenu() {
   return <>
 		<ul className='flex justify-center space-x-8'>
-			<li className='hover:text-white/70 transition-colors ease-in-out cursor-default'>About</li>
-			<li className='hover:text-white/70 transition-colors ease-in-out cursor-default'>Daily</li>
-			<li className='hover:text-white/70 transition-colors ease-in-out cursor-default'>Categories</li>
-			<li className='hover:text-white/70 transition-colors ease-in-out cursor-default'>Policy</li>
+			<NavItem title="About">
+				<NavWindow text='Something about this site' />
+			</NavItem>
+			<NavItem title="Daily">
+				<NavWindow text='Something about daily options' />
+			</NavItem>
+			<NavItem title="Categories">
+				<NavWindow text='Choose categories' />
+			</NavItem>
+			<NavItem title="Policy">
+				<NavWindow text='Read the policy' />
+			</NavItem>
 		</ul>
 	</>
 }

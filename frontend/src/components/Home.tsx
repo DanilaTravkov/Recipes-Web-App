@@ -104,7 +104,7 @@ export const Home = () => {
 				</div>
 			</div>
 
-			<div className="flex w-full h-screen bg-gray-300">
+			<div className="flex w-full h-screen bg-white/80">
 				<div className="relative w-1/2 h-full">
 					<div className="absolute h-1/2 w-1/2 right-0 m-10 bg-black/80 rounded-xl"></div>
 					<div className="absolute h-1/2 w-1/2 bottom-0 left-1/4 mb-24 bg-black/40 rounded-xl"></div>
