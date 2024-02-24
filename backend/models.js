@@ -20,3 +20,31 @@ const connectionOptions = {
 
 export const db = pgp(connectionOptions);
 
+export async function getAll(req, res, next) {
+	try {
+		const dishs = await db.any('select * from dish')
+		res.send(dishs)
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export async function getById(req, res, next) {
+	try {
+		const dish = await db.any('select * from dish where id = $1', req.params.id)
+		res.send(dish)
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export async function createDish(req, res, next) {
+	try {
+		const {title, descr} = req.body
+		const newDish = await db.one('insert into dish (title, descr) values ($1, $2) returning id', [title, descr])
+		console.log(`A new dish with id ${newDish.id} has been created`)
+	} catch (error) {
+		console.log(error)
+	}
+}
+
