@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import pgPromise from 'pg-promise';
-import { redisClient } from '.';
+import { redisClient } from './index.js';
 config();
 
 const pgp = pgPromise();
@@ -22,19 +22,34 @@ export const db = pgp(connectionOptions);
 
 export async function getAll(req, res, next) {
 	try {
-		const dishsFromRedis = await redisClient.hGetAll("allDishes", "key")
-		if (dishsFromRedis) {
-			res.send(dishsFromRedis);
+		const startTimeDb = new Date();
+		const dishesFromDb = await db.any('select * from dish');
+		const endTimeDb = new Date();
+		const dbTimeDifference = endTimeDb - startTimeDb;
+
+		const startTimeRedis = new Date();
+		const dishesFromRedis = await redisClient.hGet("allDishes", "key");
+		const endTimeRedis = new Date();
+		const redisTimeDifference = endTimeRedis - startTimeRedis;
+
+		if (Object.keys(dishesFromRedis).length > 0) {
+			console.log("Received response from Redis");
+			console.log("Time taken by Redis: " + redisTimeDifference + " milliseconds");
+			res.send(dishesFromRedis);
 		} else {
-			const dishsFromDb = await db.any('select * from dish');
-			await redisClient.hSet("allDishes", "key", JSON.stringify(dishsFromDb));
+			await redisClient.hSet("allDishes", "key", dishesFromDb);
 			await redisClient.expire("allDishes", 3600);
-			res.send(dishsFromDb);
+
+			console.log("Received response from DB");
+			console.log("Time taken by DB: " + dbTimeDifference + " milliseconds");
+
+			res.send(dishesFromDb);
 		}
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 	}
 }
+
 
 export async function getById(req, res, next) {
 	try {
