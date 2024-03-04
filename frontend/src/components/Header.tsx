@@ -4,43 +4,29 @@ import '../override.css'
 import React, { useState } from 'react'
 import { NavItem, NavWindow } from './NavItem'
 
-// const components: { title: string; href: string; description: string }[] = [
-//   {
-//     title: "Alert Dialog",
-//     href: "/docs/primitives/alert-dialog",
-//     description:
-//       "A modal dialog that interrupts the user with important content and expects a response.",
-//   },
-//   {
-//     title: "Hover Card",
-//     href: "/docs/primitives/hover-card",
-//     description:
-//       "For sighted users to preview content available behind a link.",
-//   },
-//   {
-//     title: "Progress",
-//     href: "/docs/primitives/progress",
-//     description:
-//       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-//   },
-//   {
-//     title: "Scroll-area",
-//     href: "/docs/primitives/scroll-area",
-//     description: "Visually or semantically separates content.",
-//   },
-//   {
-//     title: "Tabs",
-//     href: "/docs/primitives/tabs",
-//     description:
-//       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-//   },
-//   {
-//     title: "Tooltip",
-//     href: "/docs/primitives/tooltip",
-//     description:
-//       "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-//   },
-// ]
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/ui/command"
+
+
 
 export function MyNavigationMenu() {
   return <>
@@ -63,21 +49,6 @@ export function MyNavigationMenu() {
 
 export const Header = () => {
 
-	const [searchInput, setSearchInput] = useState<string>("")
-	const [openSearch, setOpenSearch] = useState<boolean>(false)
-
-	const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchInput(event.target.value)
-	}
-
-	const handleFocus = () => {
-		openSearch ? setOpenSearch(false) :  setOpenSearch(true)
-		setSearchInput("")
-		console.log(openSearch)
-	}
-
-
-
 	return (
 		<header className="h-1/6 flex items-center">
 			<div className="flex justify-center w-1/4 font-extrabold text-3xl">Logo</div>
@@ -88,10 +59,44 @@ export const Header = () => {
 
 			<div className="flex justify-center w-1/2 space-x-2">
 
-				<div className={`flex relative rounded-full h-8 ${openSearch ? "w-1/3" : "w-8"} hover:w-1/3 transition-all ease-in-out`}>
-					<input value={searchInput} onChange={handleSearch} onBlur={handleFocus} onFocus={handleFocus} type="text" className="relative bg-red rounded-full w-full transition-all ease-in-out p-2" />
-					<img src="src/assets/svg/search.svg" alt="search" className="absolute top-0 right-0 w-8 h-8 p-1" />
-				</div>
+				<Dialog>
+				<DialogTrigger asChild>
+					<div className={`flex relative h-8 w-8 transition-colors ease-in-out`}>
+						<button type="submit" className="relative w-full p-2" />
+						<img src="src/assets/svg/search.svg" alt="search" className="transition-colors ease-in-out rounded-full absolute top-0 right-0 w-8 h-8 p-1 bg-violet-500 hover:bg-violet-600 cursor-pointer" />
+					</div>
+				</DialogTrigger>
+				<DialogContent className="sm:max-w-[425px] h-1/2 bg-dark-4 border-none flex flex-col">
+					<DialogHeader>
+						<DialogTitle>Search for recipes</DialogTitle>
+						<DialogDescription>
+							If you cannot find your recipe here, try searching by keywords or be the first to create.
+						</DialogDescription>
+					</DialogHeader>
+
+					<Command className='bg-dark-4'>
+						<CommandInput placeholder="Search by name or keyword..." />
+						<CommandList>
+							<CommandEmpty>No results found.</CommandEmpty>
+							<CommandGroup heading="Suggestions">
+								<CommandItem>Calendar</CommandItem>
+								<CommandItem>Search Emoji</CommandItem>
+								<CommandItem>Calculator</CommandItem>
+							</CommandGroup>
+							<CommandSeparator />
+							<CommandGroup heading="Settings">
+								<CommandItem>Profile</CommandItem>
+								<CommandItem>Billing</CommandItem>
+								<CommandItem>Settings</CommandItem>
+							</CommandGroup>
+						</CommandList>
+					</Command>
+
+					{/* <DialogFooter>
+						<Button type="submit">Save changes</Button>
+					</DialogFooter> */}
+				</DialogContent>
+			</Dialog>
 
 				<div className="flex justify-start">
 					<div className="border-2 border-white rounded-full h-8 w-8 p-0.5">

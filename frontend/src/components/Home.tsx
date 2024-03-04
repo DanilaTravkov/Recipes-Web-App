@@ -84,7 +84,7 @@ export const Home = () => {
 							<p className="text-4xl font-normal mb-10">Create and start sharing</p>
 							<p className="mb-10 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim reprehenderit recusandae accusamus libero repellat architecto aspernatur possimus quae tempore at fugiat non nam illum quod deserunt magnam, quas laborum incidunt?</p>
 							<a href="#second">
-								<Button className='bg-red hover:bg-red/70 p-2 w-1/2' type="button">
+								<Button className='bg-violet-500 hover:bg-violet-600 p-2 w-1/2' type="button">
 									Explore &#x2197;
 								</Button>
 							</a>
