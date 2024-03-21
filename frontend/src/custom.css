@@ -29,3 +29,11 @@
   width: calc(1/8 * 100%);
 	filter: blur(2px)
 }
+
+/* #second {
+	background-image: url("./assets/other/food7.jpeg");
+	background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+} */

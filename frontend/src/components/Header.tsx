@@ -2,7 +2,7 @@ import '../custom.css'
 import '../override.css'
 
 import React, { useState } from 'react'
-import { NavItem, NavWindow } from './NavItem'
+import { DropdownNavItem, NavWindow } from './NavItem'
 
 import {
   Dialog,
@@ -25,24 +25,25 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command"
+import { UserIcon } from './UserIcon'
 
 
 
 export function MyNavigationMenu() {
   return <>
 		<ul className='flex justify-center space-x-8'>
-			<NavItem title="About">
+			<DropdownNavItem title="About">
 				<NavWindow items={["About", "Blyat", "Cyka"]} />
-			</NavItem>
-			<NavItem title="Daily">
+			</DropdownNavItem>
+			<DropdownNavItem title="Daily">
 				<NavWindow items={["About", "Blyat", "Cyka"]} />
-			</NavItem>
-			<NavItem title="Categories">
+			</DropdownNavItem>
+			<DropdownNavItem title="Categories">
 				<NavWindow items={["About", "Blyat", "Cyka"]} />
-			</NavItem>
-			<NavItem title="Policy">
+			</DropdownNavItem>
+			<DropdownNavItem title="Policy">
 				<NavWindow items={["About", "Blyat", "Cyka"]} />
-			</NavItem>
+			</DropdownNavItem>
 		</ul>
 	</>
 }
@@ -57,7 +58,7 @@ export const Header = () => {
 				<MyNavigationMenu />
 			</div>
 
-			<div className="flex justify-center w-1/2 space-x-2">
+			<div className="flex justify-center items-center w-1/2 space-x-2">
 
 				<Dialog>
 				<DialogTrigger asChild>
@@ -66,7 +67,7 @@ export const Header = () => {
 						<img src="src/assets/svg/search.svg" alt="search" className="transition-colors ease-in-out rounded-full absolute top-0 right-0 w-8 h-8 p-1 bg-violet-500 hover:bg-violet-600 cursor-pointer" />
 					</div>
 				</DialogTrigger>
-				<DialogContent className="sm:max-w-[425px] h-1/2 bg-dark-4 border-none flex flex-col">
+				<DialogContent className="sm:max-w-[425px] h-1/2 bg-dark-3 border-none flex flex-col">
 					<DialogHeader>
 						<DialogTitle>Search for recipes</DialogTitle>
 						<DialogDescription>
@@ -74,7 +75,7 @@ export const Header = () => {
 						</DialogDescription>
 					</DialogHeader>
 
-					<Command className='bg-dark-4'>
+					<Command className='bg-dark-3'>
 						<CommandInput placeholder="Search by name or keyword..." />
 						<CommandList>
 							<CommandEmpty>No results found.</CommandEmpty>
@@ -98,11 +99,7 @@ export const Header = () => {
 				</DialogContent>
 			</Dialog>
 
-				<div className="flex justify-start">
-					<div className="border-2 border-white rounded-full h-8 w-8 p-0.5">
-						<img src="src/assets/svg/user.png" alt="user" />
-					</div>
-				</div>
+			<UserIcon />
 
 			</div>
 		</header>

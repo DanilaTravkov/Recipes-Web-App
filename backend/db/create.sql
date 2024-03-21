@@ -21,6 +21,7 @@ create table "dish"(
 	id serial primary key,
 	title varchar(20),
 	descr text,
+	img_link varchar(255),
 	created_at timestamp default current_timestamp,
 	updated_at timestamp default current_timestamp,
 	user_id int references "user"(id)

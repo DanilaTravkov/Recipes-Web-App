@@ -4,6 +4,8 @@ import Create from './auth/Create'
 import { AuthLayout } from './auth/AuthLayout'
 import { Login } from './auth/Login'
 import { Home } from './components/Home'
+import { CreateRecipes } from './pages/CreateRecipes'
+import { AuthLayoutPages } from './pages/AuthLayoutAPages'
 
 function App() {
 
@@ -18,7 +20,10 @@ function App() {
               <Route path="/login" element={<Login />}/>
             </Route>
             {/* private routes */}
-            <Route path='/' element={<Home />} />
+              <Route path='/' element={<Home />} />
+              <Route element={<AuthLayoutPages/>}>
+                <Route path='/create-recipe' element={<CreateRecipes />} />
+              </Route>
           </Routes>
         </main>
       </Router>

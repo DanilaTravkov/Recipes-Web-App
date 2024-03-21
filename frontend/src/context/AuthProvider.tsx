@@ -4,7 +4,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
-	const value = {
+	const value: object = {
 		isLoggedIn: true,
 		message: "Hello from context!"
 	}

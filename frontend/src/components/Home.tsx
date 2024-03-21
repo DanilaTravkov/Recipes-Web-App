@@ -108,9 +108,9 @@ export const Home = () => {
 
 			<div id="second" className="flex w-full h-screen bg-white/80">
 				<div className="relative w-1/2 h-full">
-					<div className="absolute h-1/2 w-1/2 right-0 m-10 bg-black/80 rounded-xl"></div>
-					<div className="absolute h-1/2 w-1/2 bottom-0 left-1/4 mb-24 bg-black/40 rounded-xl"></div>
-					<div className="absolute h-1/2 w-1/2 m-20 mt-24 ml-10 bg-black/60 rounded-xl"></div>
+					<img src="src/assets/other/sushi.jpeg" className="absolute h-1/2 w-1/2 right-0 m-10 bg-black/80 rounded-xl" />
+					<img src="src/assets/other/meat_and_potatos.jpeg" className="absolute h-1/2 w-1/2 bottom-0 left-1/4 mb-24 bg-black/40 rounded-xl" />
+					<img src="src/assets/other/strawberry_and_granola.jpeg" className="absolute h-1/2 w-1/2 m-20 mt-24 ml-10 bg-black/60 rounded-xl" />
 				</div>
 				<div className="flex w-1/2 h-full items-center jusity-center px-20">
 					<div>
@@ -179,6 +179,10 @@ export const Home = () => {
 
 					</div>
 				</div>
+			</div>
+
+			<div id="third" className="flex w-full h-screen">
+
 			</div>
 				
 		</div>

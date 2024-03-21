@@ -22,31 +22,32 @@ export const db = pgp(connectionOptions);
 
 export async function getAll(req, res, next) {
 	try {
-		const startTimeDb = new Date();
-		const dishesFromDb = await db.any('select * from dish');
-		const endTimeDb = new Date();
-		const dbTimeDifference = endTimeDb - startTimeDb;
-
 		const startTimeRedis = new Date();
 		const dishesFromRedis = await redisClient.hGet("allDishes", "key");
 		const endTimeRedis = new Date();
 		const redisTimeDifference = endTimeRedis - startTimeRedis;
 
-		if (Object.keys(dishesFromRedis).length > 0) {
+		if (dishesFromRedis) {
 			console.log("Received response from Redis");
 			console.log("Time taken by Redis: " + redisTimeDifference + " milliseconds");
 			res.send(dishesFromRedis);
 		} else {
-			await redisClient.hSet("allDishes", "key", dishesFromDb);
-			await redisClient.expire("allDishes", 3600);
+			const startTimeDb = new Date();
+			const dishesFromDb = await db.any('select * from dish');
+			const endTimeDb = new Date();
+			const dbTimeDifference = endTimeDb - startTimeDb;
+
+			const dishesFromDbString = JSON.stringify(dishesFromDb)
+			await redisClient.hSet("allDishes", "key", dishesFromDbString);
 
 			console.log("Received response from DB");
 			console.log("Time taken by DB: " + dbTimeDifference + " milliseconds");
-
 			res.send(dishesFromDb);
 		}
 	} catch (error) {
 		console.log(error);
+	} finally {
+		await redisClient.expire("allDishes", 3600);
 	}
 }
 
