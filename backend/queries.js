@@ -83,3 +83,8 @@ export async function deleteDish(req, res, next) {
     res.status(500).send("Internal Server Error");
   }
 }
+
+export async function createUser(req, res, next) {
+	const token = generateAccessToken({ username: req.body.username });
+	res.json(token);
+}

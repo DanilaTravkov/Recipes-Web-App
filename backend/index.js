@@ -9,9 +9,19 @@ export const app = express()
 
 const port = process.env.SERVER_PORT
 const host = process.env.SERVER_HOST
+
 const corsOptions = {
-	origin: [`http://${host}:${port}`]
-}
+	origin: `http://${host}:${port}`,
+	credentials: true,
+	methods: ["GET", "POST", "PUT", "DELETE"],
+	allowedHeaders: [
+	  "Content-Type",
+	  "Authorization",
+	  "Access-Control-Allow-Credentials",
+	],
+};
+  
+app.use(cors(corsOptions));
 
 export const redisClient = createClient({
 	password: process.env.REDIS_PASSWORD,
