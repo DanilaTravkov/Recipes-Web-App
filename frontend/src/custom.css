@@ -16,18 +16,21 @@
 /* custom-styles.css */
 
 .custom-element {
-  transition: width 300ms ease-in-out;
-	filter: none
+    transition: width 300ms ease-in-out, filter 300ms ease-in-out;
+    overflow: hidden;
 }
 
 .custom-element:hover {
-  width: calc(15/16 * 100%);
-	filter: none
+    filter: none;
+    width: 50%; 
 }
 
-.custom-element:hover .custom-element:not(:hover) {
-  width: calc(1/8 * 100%);
-	filter: blur(2px)
+
+/* Ensure height remains constant */
+.custom-element img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 /* #second {

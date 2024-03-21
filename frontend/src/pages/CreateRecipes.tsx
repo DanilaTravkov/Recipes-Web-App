@@ -121,10 +121,12 @@ export const CreateRecipes = () => {
 
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-2 flex flex-col gap-2 w-1/2"
+            className="space-y-2 flex flex-col gap-2 w-full"
           >
 
             {/* Additional Recipe Fields */}
+            <div className='flex'>
+            <div className='w-1/2'>
             <FormField
               control={form.control}
               name="recipeName"
@@ -162,8 +164,9 @@ export const CreateRecipes = () => {
                 </FormItem>
               )}
             />
+            </div>
 
-						<div className='flex'>
+						<div className='flex w-1/2 justify-center items-center'>
 						<FormField
 							control={form.control}
 							name="items2"
@@ -184,7 +187,7 @@ export const CreateRecipes = () => {
                     return (
                       <FormItem
                         key={item.id}
-                        className={`flex flex-row items-start space-y-0`}
+                        className={`flex flex-row items-start space-y-0 pl-8`}
                       >
                         <FormControl>
                           <Checkbox
@@ -262,6 +265,7 @@ export const CreateRecipes = () => {
 			)}
 		/>
 						</div>
+            </div>
 
             <FormField
               control={form.control}

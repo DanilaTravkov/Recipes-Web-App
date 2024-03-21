@@ -16,6 +16,7 @@
 // } from "@/components/ui/form"
 // import { Input } from "@/components/ui/input"
 // import { searchFormSchema } from "../auth/schema"
+import React from "react"
 import { Button } from "@/components/ui/button"
 
 import '../custom.css'
@@ -32,7 +33,7 @@ import {
 } from "@/components/ui/table"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
+import { AuthContext } from "@/context/AuthProvider"
 
 export const Home = () => {
 
@@ -47,7 +48,6 @@ export const Home = () => {
 	// 	// TODO
 	// }
 
-	// const context = useContext(AuthContext)
 	const isLoading = false
 
 	return isLoading ? (
@@ -90,12 +90,12 @@ export const Home = () => {
 							</a>
 						</div>
 					</section>
-
+					
 					<section className="w-1/2 flex p-5 pr-0 pb-20 space-x-8">
-						<div className="h-full w-4/5 max-w-ful overflow-hidden rounded-lg custom-element">
+						<div className="h-full w-1/2 max-w-full overflow-hidden rounded-lg">
 							<img alt="photo" src="src/assets/other/food1.jpeg" className="h-full w-full object-cover" />
 						</div>
-						<div className="h-full w-1/3 max-w-full overflow-hidden rounded-lg custom-element">
+						<div className="h-full w-1/4 max-w-full overflow-hidden rounded-lg custom-element">
 							<img alt="photo" src="src/assets/other/food6.jpeg" className="h-full w-full object-cover" />
 						</div>
 						<div className="h-full w-1/4 max-w-full overflow-hidden rounded-l-lg custom-element">

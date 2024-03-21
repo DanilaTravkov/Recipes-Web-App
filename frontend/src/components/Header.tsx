@@ -26,8 +26,9 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 import { UserIcon } from './UserIcon'
+import { AuthContext } from '@/context/AuthProvider'
 
-
+import { tokenInterface } from '@/types/authTypes'
 
 export function MyNavigationMenu() {
   return <>
@@ -49,6 +50,8 @@ export function MyNavigationMenu() {
 }
 
 export const Header = () => {
+
+	const context = React.useContext(AuthContext);
 
 	return (
 		<header className="h-1/6 flex items-center">
@@ -98,8 +101,10 @@ export const Header = () => {
 					</DialogFooter> */}
 				</DialogContent>
 			</Dialog>
-
-			<UserIcon />
+			
+			{
+				context.token ? <UserIcon /> : <p>Log in</p>
+			}
 
 			</div>
 		</header>
