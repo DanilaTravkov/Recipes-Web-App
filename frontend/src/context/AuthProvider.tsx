@@ -14,6 +14,11 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 		}
 	}, []);
 
+	const getCookie = (name: string) => {
+		const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+		return cookieValue ? cookieValue.pop() : null;
+	  };
+
 	const setCookie = (name: string, value: string, days: number) => {
 		let expires = '';
 		if (days) {

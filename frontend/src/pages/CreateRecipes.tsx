@@ -1,13 +1,11 @@
-import { useContext } from 'react'
-import { AuthContext } from '@/context/AuthProvider'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 
-import { z } from "zod"
+import { z } from "zod";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,92 +13,65 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-	FormDescription
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Link } from 'react-router-dom'
+  FormDescription
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Link } from 'react-router-dom';
+
+import { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import { AuthContext } from '@/context/AuthProvider';
+import { tokenInterface } from "@/types/authTypes";
+import { AccessDenied } from "./AccessDenied";
 
 export const CreateRecipes = () => {
 
-	const items = [
-		{
-			id: "recents",
-			label: "Recents",
-		},
-		{
-			id: "home",
-			label: "Home",
-		},
-		{
-			id: "applications",
-			label: "Applications",
-		},
-		{
-			id: "desktop",
-			label: "Desktop",
-		},
-		{
-			id: "downloads",
-			label: "Downloads",
-		},
-		{
-			id: "documents",
-			label: "Documents",
-		}
-	] as const
+  const { token } = useContext(AuthContext);
 
-	const items2 = [
-		{
-			id: "recents2",
-			label: "Recents",
-		},
-		{
-			id: "home2",
-			label: "Home",
-		},
-		{
-			id: "applications2",
-			label: "Applications",
-		},
-		{
-			id: "desktop2",
-			label: "Desktop",
-		},
-		{
-			id: "downloads2",
-			label: "Downloads",
-		},
-		{
-			id: "documents2",
-			label: "Documents",
-		}
-	]
+  const items = [
+    {
+      id: "cheese",
+      label: "Cheese",
+    },
+    {
+      id: "tomatoes",
+      label: "Tomatoes",
+    },
+    {
+      id: "flour",
+      label: "Flour",
+    },
+    {
+      id: "eggs",
+      label: "Eggs",
+    },
+    {
+      id: "onions",
+      label: "Onions",
+    },
+    {
+      id: "chiken",
+      label: "Chiken",
+    }
+  ] as const;
 
   const createRecipeSchema = z.object({
     recipeName: z.string().min(2).max(50),
     ingredients: z.string().min(5),
-		items: z.array(z.string()).refine((value) => value.some((item) => item), {
-			message: "You have to select at least one item.",
-		}),
-		items2: z.array(z.string()).refine((value) => value.some((item) => item), {
-			message: "You have to select at least one item.",
-		}),
+    items: z.array(z.string()).refine((value) => value.some((item) => item), {
+      message: "You have to select at least one item.",
+    }),
     instructions: z.string().min(10),
   });
 
-  interface userContext {
-    isLoggedIn: boolean;
-    message: string;
-  }
-
-  const context: userContext = useContext(AuthContext);
+  const context: tokenInterface = useContext(AuthContext);
 
   const form = useForm<z.infer<typeof createRecipeSchema>>({
     resolver: zodResolver(createRecipeSchema),
     defaultValues: {
       recipeName: "",
       ingredients: "",
-			items: ["recents", "home"],
+      items: ["recents", "home"],
       instructions: "",
     },
   });
@@ -110,188 +81,103 @@ export const CreateRecipes = () => {
     console.log("User passed values: ", values);
   }
 
-  return (
-    <div className="flex flex-1 flex-col w-full h-screen">
-      <Form {...form}>
-        <div className="flex relative bg-white/10 h-full flex-col items-start justify-start p-5">
-          <p className="mb-5 text-2xl font-bold">Create recipe</p>
-						<Link className="absolute bottom-0 left-0 p-5 text-sm" to="/">
-							Return to the main page
-						</Link>
+  return context.token ? (
+    <div className="min-h-screen w-full flex items-center justify-center bg-black">
+      <div className="flex flex-col space-y-6 bg-dark-1 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <p className="mb-4 text-3xl font-bold text-center">Create Recipe</p>
+        <Link className="absolute top-0 left-0 mt-2 ml-2 text-sm text-gray-700" to="/">
+          Return to the main page
+        </Link>
 
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-2 flex flex-col gap-2 w-full"
-          >
+        <Form {...form} onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="recipeName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Recipe Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter recipe name"
+                    type="text"
+                    {...field}
+                    className="w-full px-4 py-2 rounded-md border text-black border-gray-300 focus:outline-none focus:border-indigo-600"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            {/* Additional Recipe Fields */}
-            <div className='flex'>
-            <div className='w-1/2'>
-            <FormField
-              control={form.control}
-              name="recipeName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Recipe Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter recipe name"
-                      type="text"
-                      className="text-black"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="ingredients"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Ingredients</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter ingredients"
+                    type="text"
+                    {...field}
+                    className="w-full px-4 py-2 text-black rounded-md border border-gray-300 focus:outline-none focus:border-indigo-600"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="ingredients"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Ingredients</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter ingredients"
-                      type="text"
-                      className="text-black"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            </div>
-
-						<div className='flex w-1/2 justify-center items-center'>
-						<FormField
-							control={form.control}
-							name="items2"
-							render={() => (
-            <FormItem className='items-center w-1/2'>
-              {/* <div className="mb-4 w-44">
-                <FormLabel className="text-base">Sidebar</FormLabel>
-                <FormDescription>
-                  Select the items you want to display in the sidebar.
-                </FormDescription>
-              </div> */}
+          <div>
+            {/* <FormLabel>Sidebar Items</FormLabel> */}
+            <div className="grid grid-cols-3 gap-4">
               {items.map((item) => (
                 <FormField
                   key={item.id}
                   control={form.control}
                   name="items"
-                  render={({ field }) => {
-                    return (
-                      <FormItem
-                        key={item.id}
-                        className={`flex flex-row items-start space-y-0 pl-8`}
-                      >
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(item.id)}
-                            onCheckedChange={(checked) => {
-                              return checked
-                                ? field.onChange([...field.value, item.id])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== item.id
-                                    )
-                                  )
-                            }}
-                          />
-                        </FormControl>
-                        <FormLabel className="font-normal pl-2">
-                          {item.label}
-                        </FormLabel>
-                      </FormItem>
-                    )
-                  }}
+                  render={({ field }) => (
+                    <FormItem className="flex items-center">
+                      <Checkbox
+                        checked={field.value?.includes(item.id)}
+                        onCheckedChange={(checked) =>
+                          checked
+                            ? field.onChange([...field.value, item.id])
+                            : field.onChange(field.value?.filter((value) => value !== item.id))
+                        }
+                      />
+                      <FormLabel className="ml-2">{item.label}</FormLabel>
+                    </FormItem>
+                  )}
                 />
               ))}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-				<FormField
-					control={form.control}
-					name="items"
-					render={() => (
-				<FormItem className='items-center w-1/2'>
-					{/* <div className="mb-4 w-44">
-						<FormLabel className="text-base">Sidebar</FormLabel>
-						<FormDescription>
-							Select the items you want to display in the sidebar.
-						</FormDescription>
-					</div> */}
-					{items.map((item) => (
-						<FormField
-							key={item.id}
-							control={form.control}
-							name="items"
-							render={({ field }) => {
-								return (
-									<FormItem
-										key={item.id}
-										className={`flex flex-row items-start space-y-0`}
-									>
-										<FormControl>
-											<Checkbox
-												checked={field.value?.includes(item.id)}
-												onCheckedChange={(checked) => {
-													return checked
-														? field.onChange([...field.value, item.id])
-														: field.onChange(
-																field.value?.filter(
-																	(value) => value !== item.id
-																)
-															)
-												}}
-											/>
-										</FormControl>
-										<FormLabel className="font-normal pl-2">
-											{item.label}
-										</FormLabel>
-									</FormItem>
-								)
-							}}
-						/>
-					))}
-					<FormMessage />
-				</FormItem>
-			)}
-		/>
-						</div>
             </div>
+            <FormMessage name="items" />
+          </div>
 
-            <FormField
-              control={form.control}
-              name="instructions"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Instructions</FormLabel>
-                  <FormControl>
-                    <Textarea
-										placeholder="Enter instructions"
-										className="text-black"
-										{...field}
-										/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="instructions"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Instructions</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Enter instructions"
+                    {...field}
+                    className="w-full px-4 py-2 text-black rounded-md border border-gray-300 focus:outline-none focus:border-indigo-600"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <Button className="bg-indigo-800 p-2" type="submit">
-              Create Recipe
-            </Button>
-          </form>
-        </div>
-      </Form>
+          <Button className="w-full py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-md">
+            Create Recipe
+          </Button>
+        </Form>
+      </div>
     </div>
-  );
+  ) : <AccessDenied />;
 };
-
