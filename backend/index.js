@@ -1,9 +1,15 @@
 import express from "express"
 import cors from 'cors'
+// import { createClient } from "redis";
 import { router } from './routes.js';
 import { config } from "dotenv";
-import { createClient } from 'redis'
-config();
+import { fileURLToPath } from 'url';
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+config({ path: `${__dirname}/../.env` });
 
 export const app = express()
 
@@ -23,17 +29,17 @@ const corsOptions = {
   
 app.use(cors(corsOptions));
 
-export const redisClient = createClient({
-	password: process.env.REDIS_PASSWORD,
-	socket: {
-		host: process.env.REDIS_HOST,
-		port: process.env.REDIS_PORT
-	}
-});
+// export const redisClient = createClient({
+// 	password: process.env.REDIS_PASSWORD,
+// 	socket: {
+// 		host: process.env.REDIS_HOST,
+// 		port: process.env.REDIS_PORT
+// 	}
+// });
 
-redisClient.on('error', err => console.log("Redis Client Error:", err));
+// redisClient.on('error', err => console.log("Redis Client Error:", err));
 
-await redisClient.connect();
+// await redisClient.connect();
 
 app.use(express.json())
 app.use(cors(corsOptions))

@@ -1,11 +1,11 @@
--- psql -d postgres -f db/create.sql
+-- psql -U postgres -d postgres -f db/create.sql
 
 -- WARNING
 -- This script will completely delete tables and create them again.
 -- Use "path/to/script" to save the current data to a csv file if you have to.
 
 alter table dish drop constraint if exists dish_user_id_fkey;
-drop table if exists "user" cascase;
+drop table if exists "user" cascade;
 drop table if exists "dish";
 
 create table "user"(

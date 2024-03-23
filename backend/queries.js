@@ -1,7 +1,15 @@
-import { config } from 'dotenv';
 import pgPromise from 'pg-promise';
-import { redisClient } from './index.js';
-config();
+// import { redisClient } from './index.js';
+import bcrypt from 'bcrypt';
+
+import { config } from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+config({ path: `${__dirname}/../.env` });
 
 const pgp = pgPromise();
 
@@ -22,32 +30,24 @@ export const db = pgp(connectionOptions);
 
 export async function getAll(req, res, next) {
 	try {
-		const startTimeRedis = new Date();
-		const dishesFromRedis = await redisClient.hGet("allDishes", "key");
-		const endTimeRedis = new Date();
-		const redisTimeDifference = endTimeRedis - startTimeRedis;
+		// const dishesFromRedis = await redisClient.hGet("allDishes", "key");
 
-		if (dishesFromRedis) {
-			console.log("Received response from Redis");
-			console.log("Time taken by Redis: " + redisTimeDifference + " milliseconds");
-			res.send(dishesFromRedis);
-		} else {
-			const startTimeDb = new Date();
+		// if (dishesFromRedis) {
+		// 	console.log("Received response from Redis");
+		// 	res.send(dishesFromRedis);
+		// } else {
 			const dishesFromDb = await db.any('select * from dish');
-			const endTimeDb = new Date();
-			const dbTimeDifference = endTimeDb - startTimeDb;
 
 			const dishesFromDbString = JSON.stringify(dishesFromDb)
-			await redisClient.hSet("allDishes", "key", dishesFromDbString);
+			// await redisClient.hSet("allDishes", "key", dishesFromDbString);
 
 			console.log("Received response from DB");
-			console.log("Time taken by DB: " + dbTimeDifference + " milliseconds");
 			res.send(dishesFromDb);
-		}
+		// }
 	} catch (error) {
 		console.log(error);
 	} finally {
-		await redisClient.expire("allDishes", 3600);
+		// await redisClient.expire("allDishes", 3600);
 	}
 }
 
@@ -84,7 +84,32 @@ export async function deleteDish(req, res, next) {
   }
 }
 
+export async function loginUser(req, res, next) {
+	const { username, password } = req.body;
+	try {
+		// Assuming you have a users table with username and password columns
+		const user = await db.one('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password]);
+		const passwordMatch = await bcrypt.compare(password, user.password);
+		if (!passwordMatch)
+			return res.status(401).json({ message: 'Invalid credentials' });
+		const token = createToken({ id: user.id, username: user.username });
+		res.json({ token });
+	} catch (error) {
+		console.error('Error logging in:', error);
+    	res.status(401).json({ error: 'Invalid credentials' });
+	}
+};
+
 export async function createUser(req, res, next) {
-	const token = generateAccessToken({ username: req.body.username });
-	res.json(token);
-}
+	const { username, password } = req.body;
+
+	try {
+		const hashedPassword = await bcrypt.hash(password, 10);
+
+		const newUser = await db.one('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id', [username, hashedPassword]);
+		res.status(201).json({message: "User created", userId: newUser.id})
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: "Error when creating a user "})
+	}
+};
