@@ -51,7 +51,7 @@ export function MyNavigationMenu() {
 
 export const Header = () => {
 
-	const context = React.useContext(AuthContext);
+	const { token } = React.useContext(AuthContext);
 
 	return (
 		<header className="h-1/6 flex items-center">
@@ -103,7 +103,7 @@ export const Header = () => {
 			</Dialog>
 			
 			{
-				context.token ? <UserIcon /> : <p>Log in</p>
+				token ? <UserIcon /> : <p>Log in</p>
 			}
 
 			</div>
