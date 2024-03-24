@@ -1,3 +1,7 @@
+* {
+	scroll-behavior: smooth;
+}
+
 .skeleton {
 	background: linear-gradient(90deg, #cacaca 25%, #aaaaaa 50%, #cacaca 75%);
 	background-size: 200% 100%;

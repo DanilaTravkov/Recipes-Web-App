@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import { createUserFormSchema } from './schema'
 import { useContext } from 'react'
 import { AuthContext } from '@/context/AuthProvider'
@@ -16,6 +18,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Link } from 'react-router-dom'
+import { setCookie } from '@/utils/Cookies'
 
 export function Create() {
 
@@ -32,9 +35,8 @@ export function Create() {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof createUserFormSchema>) {
-
-    console.log(context.message)
+  async function onSubmit(values: z.infer<typeof createUserFormSchema>) {
+    context.login();
   }
 
 	return (

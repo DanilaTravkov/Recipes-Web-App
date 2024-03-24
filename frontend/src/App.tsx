@@ -7,6 +7,7 @@ import { Login } from './auth/Login'
 import { Home } from './components/Home'
 import { CreateRecipes } from './pages/CreateRecipes'
 import { AuthLayoutPages } from './pages/AuthLayoutAPages'
+import { Profile } from './components/Profile'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             </Route>
             {/* private routes */}
             <Route element={<AuthLayoutPages/>}>
+              <Route path='/profile' element={<Profile />}/>
               <Route path='/create-recipe' element={<CreateRecipes />} />
             </Route>
             <Route path='/' element={<Home />} />

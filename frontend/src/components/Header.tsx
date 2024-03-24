@@ -1,7 +1,7 @@
 import '../custom.css'
 import '../override.css'
 
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { DropdownNavItem, NavWindow } from './NavItem'
 
 import {
@@ -29,21 +29,22 @@ import { UserIcon } from './UserIcon'
 import { AuthContext } from '@/context/AuthProvider'
 
 import { tokenInterface } from '@/types/authTypes'
+import { Link } from 'react-router-dom'
 
 export function MyNavigationMenu() {
   return <>
-		<ul className='flex justify-center space-x-8'>
+		<ul className='flex justify-center space-x-10'>
 			<DropdownNavItem title="About">
-				<NavWindow items={["About", "Blyat", "Cyka"]} />
+				<NavWindow items={["Lisence", "Creators", "Why us?"]} />
 			</DropdownNavItem>
 			<DropdownNavItem title="Daily">
-				<NavWindow items={["About", "Blyat", "Cyka"]} />
+				<NavWindow items={["Dialy menu"]} />
 			</DropdownNavItem>
 			<DropdownNavItem title="Categories">
-				<NavWindow items={["About", "Blyat", "Cyka"]} />
+				<NavWindow items={["Vegan", "Sea food", "Lenten", "Carnivorous"]} />
 			</DropdownNavItem>
-			<DropdownNavItem title="Policy">
-				<NavWindow items={["About", "Blyat", "Cyka"]} />
+			<DropdownNavItem title="Information">
+				<NavWindow items={["Read policy", "Contact support", "Connections"]} />
 			</DropdownNavItem>
 		</ul>
 	</>
@@ -51,10 +52,29 @@ export function MyNavigationMenu() {
 
 export const Header = () => {
 
-	const { token } = React.useContext(AuthContext);
+	const [isScrolled, setIsScrolled] = useState(false);
+
+	const context: tokenInterface = React.useContext(AuthContext);
+
+	// useLayoutEffect(() => {
+	// 	const header = document.getElementsByName("header");
+	// 	const handleSCroll = () => {
+	// 		if (window.scrollY > (50)) {
+	// 			setIsScrolled(true);
+	// 		} else {
+	// 			setIsScrolled(false);
+	// 		}
+	// 	}
+	// 	window.addEventListener("scroll", handleSCroll)
+
+	// 	return () => {
+	// 		removeEventListener("scroll", handleSCroll)
+	// 	}
+
+	// }, [])
 
 	return (
-		<header className="h-1/6 flex items-center">
+		<header className={`h-1/6 flex items-center border-b border-slate-500 transition-all duration-500 ease-in-out ${isScrolled ? "bg-slate-900/20 backdrop-blur-lg" : ""}`}>
 			<div className="flex justify-center w-1/4 font-extrabold text-3xl">Logo</div>
 
 			<div className="w-1/3">
@@ -95,15 +115,17 @@ export const Header = () => {
 							</CommandGroup>
 						</CommandList>
 					</Command>
-
-					{/* <DialogFooter>
-						<Button type="submit">Save changes</Button>
-					</DialogFooter> */}
 				</DialogContent>
 			</Dialog>
 			
 			{
-				token ? <UserIcon /> : <p>Log in</p>
+				context.token ? <UserIcon /> :
+				<>
+					<span>|</span>
+					<Link to={'/login'}>
+						<p className='font-bold hover:text-white/70 transition-colors duration-300 ease-in-out'>Log in</p>
+					</Link>
+				</> 
 			}
 
 			</div>

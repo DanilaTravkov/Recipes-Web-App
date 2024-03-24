@@ -6,18 +6,18 @@ export const NavWindow = ({items}: {items: string[]}) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
 	return (
-    <ul className="absolute mt-2 w-24 z-10">
+    <ul className="absolute flex flex-col mt-2 w-36 z-10 bg-gradient-to-b from-dark-3 via-dark-4/80 to-dark-3/80 rounded-b-xl">
       {
-        items.map((item, key) => (
-          <>
+        items.map((item, index) => (
+          <div key={index}>
           <li 
             onMouseOver={() => setHoveredItem(item)} 
             onMouseOut={() => setHoveredItem(null)} 
-            className='py-2' key={key}>
+            className=' p-2'>
             {item}
           </li>
-          <span className={`bg-white m-0 p-0 h-[1px] rounded-full block transition-all ease-in-out duration-300 ${hoveredItem === item ? "w-full" : "w-0"}`} />
-          </>
+          <span className={`bg-white m-0 h-[1px] rounded-full block transition-all ease-in-out duration-300 ${hoveredItem === item ? "w-full" : "w-0"}`} />
+          </div>
         ))
       }
     </ul>
@@ -49,7 +49,7 @@ export const DropdownNavItem = ({ title, children }: { title: string; children: 
           alt="arrow"
         />
       </div>
-      <div className={`transition-opacity duration-300 ${isDropdownVisible ? 'block opacity-1' : 'opacity-0'}`}>
+      <div className={`transition-all duration-300 ${isDropdownVisible ? 'opacity-1' : 'opacity-0'}`}>
         {children}
       </div>
     </li>

@@ -1,36 +1,49 @@
-import { Button } from "@/components/ui/button"
-import { loginUserFormSchema } from './schema'
+import axios from 'axios'
+
+import { createUserFormSchema, loginUserFormSchema } from './schema'
 import { useContext } from 'react'
 import { AuthContext } from '@/context/AuthProvider'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Link } from "react-router-dom"
-
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Link, useNavigate } from 'react-router-dom'
 
 export const Login = () => {
 
+	const context = useContext(AuthContext);
+
+	const navigate = useNavigate();
+
 	const form = useForm<z.infer<typeof loginUserFormSchema>>({
-    resolver: zodResolver(loginUserFormSchema),
-    defaultValues: {
-      username: "",
-    },
-  })
- 
-  function onSubmit(values: z.infer<typeof loginUserFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+	resolver: zodResolver(loginUserFormSchema),
+	defaultValues: {
+		username: "",
+		password: "",
+		email: ""
+	},
+	});
+
+	async function onSubmit(values: z.infer<typeof loginUserFormSchema>) {
+	try {
+		const response = await axios.post("http://localhost:3000/v1/login", values);
+		const { token } = response.data;
+		console.log(token);
+		context.login(token);
+		navigate("/");
+		
+	} catch (error) {
+		console.error('Error logging in:', error);
+	}
   }
 
 	return (
@@ -47,7 +60,7 @@ export const Login = () => {
 							<FormItem>
 								<FormLabel>Username</FormLabel>
 								<FormControl>
-									<Input placeholder="Enter username" {...field} />
+									<Input className="text-black" placeholder="Enter username" {...field} />
 								</FormControl>
 								{/* <FormDescription>This is your public display name.</FormDescription> */}
 								<FormMessage />
@@ -56,12 +69,12 @@ export const Login = () => {
 					/>
 					<FormField
 						control={form.control}
-						name="username"
+						name="email"
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Email</FormLabel>
 								<FormControl>
-									<Input placeholder="Enter email" {...field} />
+									<Input className="text-black"  placeholder="Enter email" {...field} />
 								</FormControl>
 								{/* <FormDescription>This is your public display name.</FormDescription> */}
 								<FormMessage />
@@ -70,12 +83,12 @@ export const Login = () => {
 					/>
 					<FormField
 						control={form.control}
-						name="username"
+						name="password"
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Password</FormLabel>
 								<FormControl>
-									<Input type="password" placeholder="Enter password" {...field} />
+									<Input className="text-black"  type="password" placeholder="Enter password" {...field} />
 								</FormControl>
 								{/* <FormDescription>This is your public display name.</FormDescription> */}
 								<FormMessage />
@@ -83,13 +96,13 @@ export const Login = () => {
 						)}
 					/>
 					<Button className='bg-indigo-800 p-2' type="submit">
-            Sign in
-          </Button>
+						Sign in
+					</Button>
 
 					<p className="text-small-regular text-light-2 text-center mt-2">
-            Don't have an account? 
-            <Link to='/create' className="text-white font-bold ml-1">Sign up</Link>
-          </p>
+            			Don't have an account? 
+            			<Link to='/create' className="text-white font-bold ml-1">Sign up</Link>
+          			</p>
 				</form>
 			</div>
 		</Form>
