@@ -36,7 +36,9 @@ export function Create() {
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof createUserFormSchema>) {
-    context.login();
+    const response = await axios.post("http://localhost:3000/v1/createUser", values);
+    console.log(response.data.message, response.data.userId);
+    // context.login();
   }
 
 	return (

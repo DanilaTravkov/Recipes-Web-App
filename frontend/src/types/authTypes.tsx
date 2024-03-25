@@ -1,7 +1,7 @@
 type Token = string;
 
 export interface tokenInterface {
-    token: string | null
-    login: (token: Token) => void
+    tokens: any
+    login: (tokens: {}) => void
     logout: () => void
 }

@@ -35,10 +35,11 @@ export const Login = () => {
 
 	async function onSubmit(values: z.infer<typeof loginUserFormSchema>) {
 	try {
-		const response = await axios.post("http://localhost:3000/v1/login", values);
-		const { token } = response.data;
-		console.log(token);
-		context.login(token);
+		const {username, email, password} = values;
+		const response = await axios.post("http://localhost:3000/v1/login", {username, password});
+		const { accessToken, refreshToken } = response.data;
+		console.log("Access: ", accessToken, '\n', "Refresh: ", refreshToken);
+		context.login({ accessToken, refreshToken });
 		navigate("/");
 		
 	} catch (error) {

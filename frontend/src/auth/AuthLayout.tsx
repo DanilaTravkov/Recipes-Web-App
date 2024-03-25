@@ -13,7 +13,7 @@ export const AuthLayout = () => {
 			<Outlet />
 		</section>}
 
-		<img src="src/assets/other/form background.jpeg" alt="logo" className='hidden xl:block h-screen w-1/2 bg-no-repeat' />
+		{/* <img src="src/assets/other/form background.jpeg" alt="logo" className='hidden xl:block h-screen w-1/2 bg-no-repeat' /> */}
 		</>
 	)
 }

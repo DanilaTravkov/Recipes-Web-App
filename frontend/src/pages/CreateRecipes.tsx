@@ -23,10 +23,9 @@ import { Navigate } from 'react-router-dom';
 import { AuthContext } from '@/context/AuthProvider';
 import { tokenInterface } from "@/types/authTypes";
 import { AccessDenied } from "./AccessDenied";
+import axios from "axios";
 
 export const CreateRecipes = () => {
-
-  const { token } = useContext(AuthContext);
 
   const items = [
     {
@@ -50,38 +49,48 @@ export const CreateRecipes = () => {
       label: "Onions",
     },
     {
-      id: "chiken",
-      label: "Chiken",
+      id: "chicken",
+      label: "Chicken",
     }
   ] as const;
 
   const createRecipeSchema = z.object({
-    recipeName: z.string().min(2).max(50),
-    ingredients: z.string().min(5),
-    items: z.array(z.string()).refine((value) => value.some((item) => item), {
+    name: z.string().min(2).max(50),
+    ingredients: z.array(z.string()).refine((value) => value.some((item) => item), {
       message: "You have to select at least one item.",
     }),
-    instructions: z.string().min(10),
+    descr: z.string().min(10),
   });
-
-  const context: tokenInterface = useContext(AuthContext);
 
   const form = useForm<z.infer<typeof createRecipeSchema>>({
     resolver: zodResolver(createRecipeSchema),
     defaultValues: {
-      recipeName: "",
-      ingredients: "",
-      items: ["recents", "home"],
-      instructions: "",
+      name: "",
+      ingredients: [],
+      descr: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof createRecipeSchema>) {
-    console.log("Message passed from context: ", context.message);
-    console.log("User passed values: ", values);
+  const context: tokenInterface = useContext(AuthContext);
+
+  async function onSubmit(values: z.infer<typeof createRecipeSchema>) {
+    try {
+      console.log("Attempt to create a dish");
+      const tokensObject = JSON.parse(context.tokens);
+      console.log(tokensObject.accessToken);
+      const response = await axios.post("http://localhost:3000/v1/createDish", values, {
+        headers: {
+          Authorization: `Bearer ${tokensObject.accessToken}`
+        }
+      })
+      const data = response.data;
+      console.log(data.message);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  return context.token ? (
+  return context.tokens ? (
     <div className="min-h-screen w-full flex items-center justify-center bg-black">
       <div className="flex flex-col space-y-6 bg-dark-1 p-8 rounded-lg shadow-lg max-w-md w-full">
         <p className="mb-4 text-3xl font-bold text-center">Create Recipe</p>
@@ -89,10 +98,12 @@ export const CreateRecipes = () => {
           Return to the main page
         </Link>
 
-        <Form {...form} onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8"> 
+          
           <FormField
             control={form.control}
-            name="recipeName"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Recipe Name</FormLabel>
@@ -135,7 +146,7 @@ export const CreateRecipes = () => {
                 <FormField
                   key={item.id}
                   control={form.control}
-                  name="items"
+                  name="ingredients"
                   render={({ field }) => (
                     <FormItem className="flex items-center">
                       <Checkbox
@@ -152,12 +163,12 @@ export const CreateRecipes = () => {
                 />
               ))}
             </div>
-            <FormMessage name="items" />
+            <FormMessage />
           </div>
 
           <FormField
             control={form.control}
-            name="instructions"
+            name="descr"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Instructions</FormLabel>
@@ -176,6 +187,8 @@ export const CreateRecipes = () => {
           <Button className="w-full py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-md">
             Create Recipe
           </Button>
+
+          </form>      
         </Form>
       </div>
     </div>

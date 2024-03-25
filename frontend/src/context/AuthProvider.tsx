@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { tokenInterface } from '@/types/authTypes';
 
 export const AuthContext = React.createContext<tokenInterface | null>(null); // Define AuthContext with null as initial value
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
-    const [token, setToken] = useState<string | null>(localStorage.getItem("token") ? localStorage.getItem("token") : "");
+    const [tokens, setTokens] = useState<string | null>(localStorage.getItem("tokens") ? localStorage.getItem("tokens") : "");
 
-    const login = (token: string) => {
-        setToken(token);
-        localStorage.setItem('token', token);
+    const login = (tokens: any) => {
+        setTokens(tokens);
+        localStorage.setItem('tokens', JSON.stringify(tokens));
     }
 
     const logout = () => {
-        setToken(null);
-        localStorage.removeItem('token');
+        setTokens(null);
+        localStorage.removeItem('tokens');
     }
 
     const context: tokenInterface = {
-        token,
+        tokens,
         login,
         logout
     }

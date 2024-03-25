@@ -46,7 +46,7 @@ export const UserIcon = () => {
 						className='py-1 pr-2 cursor-pointer'>
 							Profile
 					</Link>
-					<span className={`bg-white m-0 p-0 h-[1px] rounded-full block transition-all ease-in-out duration-300 ${hoveredItem === 1 ? "w-full" : "w-0"}`} />
+					<span className={`bg-slate-500 m-0 p-0 h-[2px] rounded-full block transition-all ease-in-out duration-300 ${hoveredItem === 1 ? "w-full" : "w-0"}`} />
 				</div>
 				<div>
 					<Link
@@ -56,7 +56,7 @@ export const UserIcon = () => {
 						className='py-1 pr-2 cursor-pointer'>
 							Settings
 					</Link >
-					<span className={`bg-white m-0 p-0 h-[1px] rounded-full block transition-all ease-in-out duration-300 ${hoveredItem === 2 ? "w-full" : "w-0"}`} />
+					<span className={`bg-slate-500 m-0 p-0 h-[2px] rounded-full block transition-all ease-in-out duration-300 ${hoveredItem === 2 ? "w-full" : "w-0"}`} />
 				</div>
 				<div>
 					<AlertDialog>
@@ -67,7 +67,7 @@ export const UserIcon = () => {
 							className='py-1 cursor-pointer'>
 								Log out
 							</div>
-							<span className={`bg-white m-0 p-0 h-[1px] rounded-full block transition-all ease-in-out duration-300 ${hoveredItem === 3 ? "w-full" : "w-0"}`} />
+							<span className={`bg-slate-500 m-0 p-0 h-[2px] rounded-full block transition-all ease-in-out duration-300 ${hoveredItem === 3 ? "w-full" : "w-0"}`} />
 
 						</AlertDialogTrigger>
 						<AlertDialogContent>

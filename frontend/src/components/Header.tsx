@@ -74,7 +74,7 @@ export const Header = () => {
 	// }, [])
 
 	return (
-		<header className={`h-1/6 flex items-center border-b border-slate-500 transition-all duration-500 ease-in-out ${isScrolled ? "bg-slate-900/20 backdrop-blur-lg" : ""}`}>
+		<header className={`h-1/6 flex items-center transition-all duration-500 ease-in-out ${isScrolled ? "bg-slate-900/20 backdrop-blur-lg" : ""}`}>
 			<div className="flex justify-center w-1/4 font-extrabold text-3xl">Logo</div>
 
 			<div className="w-1/3">
@@ -119,7 +119,7 @@ export const Header = () => {
 			</Dialog>
 			
 			{
-				context.token ? <UserIcon /> :
+				context.tokens ? <UserIcon /> :
 				<>
 					<span>|</span>
 					<Link to={'/login'}>

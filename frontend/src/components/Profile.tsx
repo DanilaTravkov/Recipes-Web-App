@@ -5,20 +5,6 @@ import { UserIcon } from './UserIcon'; // Assuming you have a component to displ
 export const Profile = () => {
     const { token } = React.useContext(AuthContext);
 
-    // Mock user data (replace with actual user data from token or API)
-    const userData = {
-        username: 'exampleUser',
-        email: 'example@example.com',
-        // Add more user data here as needed
-    };
-
-    // Mock recipes data (replace with actual recipes data from API or context)
-    const userRecipes = [
-        { id: 1, title: 'Recipe 1', description: 'Description of Recipe 1' },
-        { id: 2, title: 'Recipe 2', description: 'Description of Recipe 2' },
-        // Add more recipes here as needed
-    ];
-
     return (
         <div className="flex flex-col items-center">
             <h2 className="text-2xl font-bold mb-4">User Profile</h2>

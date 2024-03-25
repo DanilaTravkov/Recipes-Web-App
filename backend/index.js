@@ -5,6 +5,7 @@ import { router } from './routes.js';
 import { config } from "dotenv";
 import { fileURLToPath } from 'url';
 import { dirname } from "path";
+import cookieParser from 'cookie-parser'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,21 +14,14 @@ config({ path: `${__dirname}/../.env` });
 
 export const app = express()
 
-const port = process.env.SERVER_PORT
-const host = process.env.SERVER_HOST
+const port = process.env.CLIENT_PORT
+const host = process.env.CLIENT_HOST
 
 const corsOptions = {
 	origin: `http://${host}:${port}`,
-	credentials: true,
-	methods: ["GET", "POST", "PUT", "DELETE"],
-	allowedHeaders: [
-	  "Content-Type",
-	  "Authorization",
-	  "Access-Control-Allow-Credentials",
-	],
+	credentials: true
 };
-  
-app.use(cors(corsOptions));
+
 
 // export const redisClient = createClient({
 // 	password: process.env.REDIS_PASSWORD,
@@ -41,11 +35,12 @@ app.use(cors(corsOptions));
 
 // await redisClient.connect();
 
+app.use(cookieParser())
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use("/v1", router)
 
-app.listen(port, () => {
-	console.log(`Server running at ${port}`)
+app.listen(3000, () => {
+	console.log("Server running at 3000")
 })
 
